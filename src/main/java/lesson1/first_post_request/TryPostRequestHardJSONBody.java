@@ -1,10 +1,13 @@
 package lesson1.first_post_request;
 
+import com.google.gson.JsonParser;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import java.nio.charset.StandardCharsets;
 
 import static io.restassured.RestAssured.given;
 
@@ -40,11 +43,29 @@ public class TryPostRequestHardJSONBody {
     }
     public static void main(String[] args) {
         RestAssured.baseURI = "https://petstore.swagger.io/v2/";
+
+        //створ тваринки
         Response response = given()
                 .contentType(ContentType.JSON)
                 .body(bodyForCreatePet(333, "Rain"))
                 .when()
                 .post("pet");
         System.out.println(response.getBody().asString());
+
+        //зміна тваринки
+        given()
+                .contentType(ContentType.JSON)
+                .body(bodyForCreatePet(333, "Sam"))
+                .when()
+                .put("pet");
+
+        //отрим інформ про змінену тваринку
+        System.out.println(RestAssured.get("/pet/333").getBody().asString());
+        System.out.println(JsonParser.parseString(RestAssured.get("/pet/333").getBody().asString()).getAsJsonObject()
+                .get("name").getAsString());
+
+        //видаляємо тваринку
+        RestAssured.delete("/pet/333");
+        System.out.println(RestAssured.get("/pet/333").getBody().asString());
     }
 }
