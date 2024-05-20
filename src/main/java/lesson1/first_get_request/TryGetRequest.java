@@ -1,4 +1,4 @@
-package lesson1.try_get_request;
+package lesson1.first_get_request;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
