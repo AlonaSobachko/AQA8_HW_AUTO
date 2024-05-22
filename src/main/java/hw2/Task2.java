@@ -25,7 +25,7 @@ public class Task2 {
         builder.dragAndDrop(bank, debitSideAccount).perform();
         Thread.sleep(2000);
         builder.dragAndDrop(sales, creditSideAccount).perform();
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         WebElement perfectButton = driver.findElement(By.id("equal"));
         System.out.println(perfectButton.getText());
         driver.quit();

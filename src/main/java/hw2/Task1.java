@@ -39,17 +39,13 @@ public class Task1 {
             for (WebElement carOption : carOptions) {
                 System.out.print(carOption.getText() + ", ");
             }
-
-            // Step 6: Print information about countries in the first table
             List<WebElement> firstTableCountries = driver.findElements(By.name("FromLB"));
-            System.out.print("\nКраїни з першої таблиці:\n");
+            System.out.print("\n\nКраїни з першої таблиці:\n");
             for (WebElement country : firstTableCountries) {
                 System.out.print(country.getText() + ", ");
             }
-
-            // Step 7: Print information about countries in the second table
             List<WebElement> secondTableCountries = driver.findElements(By.name("ToLB"));
-            System.out.print("\nКраїни з другої таблиці:\n");
+            System.out.print("\n\nКраїни з другої таблиці:\n");
             for (WebElement country : secondTableCountries) {
                 System.out.print(country.getText() + ", ");
             }
