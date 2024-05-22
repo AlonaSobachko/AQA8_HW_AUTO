@@ -13,69 +13,58 @@ public class Task4 {
     public static void main(String[] args) {
         WebDriver driver = DriverInit.setUpDriver();
         try {
-            // Відкриваємо веб-сторінку
             driver.get("http://www.automationpractice.pl/index.php");
-
-            // Знаходимо поле пошуку і вводимо текст "Printed Chiffon Dress"
             WebElement searchBox = driver.findElement(By.id("search_query_top"));
             searchBox.sendKeys("Printed Chiffon Dress");
-
-            // Знаходимо кнопку пошуку і натискаємо її
             WebElement searchButton = driver.findElement(By.name("submit_search"));
             searchButton.click();
-
-            // Чекаємо, поки результати пошуку завантажаться
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='product-name' and @title='Printed Chiffon Dress']")));
-
-            // Знаходимо і натискаємо на потрібний товар
-            WebElement productLink = driver.findElement(By.xpath("//a[@class='product-name' and @title='Printed Chiffon Dress']"));
-            productLink.click();
-
-            // Чекаємо завантаження сторінки товару
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add_to_cart")));
-
-            // Переходимо на вкладку WOMEN
+            WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+            WebElement firstProduct = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@class='product_img_link' and @title='Printed Chiffon Dress']")));
+            firstProduct.click();
+            boolean isProductAvailable = isElementPresent(driver, By.xpath("//span[@class='available-now']"));
+            if (isProductAvailable) {
+                WebElement addToCartButton = driver.findElement(By.name("Submit"));
+                addToCartButton.click();
+                WebElement continueShoppingButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@title='Continue shopping']")));
+                continueShoppingButton.click();
+            } else {
+                System.out.println("Товар не доступний до замовлення");
+                Thread.sleep(5000);
+            }
             WebElement womenTab = driver.findElement(By.xpath("//a[@title='Women']"));
             womenTab.click();
-
-            // Чекаємо завантаження сторінки WOMEN
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("search_query_top")));
-
-            // Знаходимо поле пошуку і вводимо текст "Faded Short"
-            searchBox = driver.findElement(By.id("search_query_top"));
-            searchBox.clear(); // Очищаємо поле пошуку перед новим введенням
-            searchBox.sendKeys("Faded Short");
-
-            // Знаходимо кнопку пошуку і натискаємо її
-            searchButton = driver.findElement(By.name("submit_search"));
-            searchButton.click();
-
-            // Чекаємо, поки результати пошуку завантажаться
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='product-name' and @title='Faded Short Sleeve T-shirts']")));
-
-            // Знаходимо і натискаємо на потрібний товар
-            WebElement fadedShortLink = driver.findElement(By.xpath("//a[@class='product-name' and @title='Faded Short Sleeve T-shirts']"));
-            fadedShortLink.click();
-
-            // Чекаємо завантаження сторінки товару
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add_to_cart")));
-
-            // Чекаємо деякий час (необов'язково, для демонстрації)
-            Thread.sleep(3000);
-
-            // Переходимо до кошика
+            WebElement womenSearchBox = driver.findElement(By.id("search_query_top"));
+            womenSearchBox.sendKeys("Faded Short");
+            WebElement womenSearchButton = driver.findElement(By.name("submit_search"));
+            womenSearchButton.click();
+            WebElement womenFirstProduct = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@class='product_img_link' and @title='Faded Short Sleeve T-shirts']")));
+            womenFirstProduct.click();
+            boolean isWomenProductAvailable = isElementPresent(driver, By.xpath("//span[@class='available-now']"));
+            if (isWomenProductAvailable) {
+                WebElement womenAddToCartButton = driver.findElement(By.name("Submit"));
+                womenAddToCartButton.click();
+                WebElement womenContinueShoppingButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@title='Continue shopping']")));
+                womenContinueShoppingButton.click();
+            } else {
+                System.out.println("Товар не доступний до замовлення");
+                Thread.sleep(5000);
+            }
             WebElement cartButton = driver.findElement(By.xpath("//a[@title='View my shopping cart']"));
             cartButton.click();
-
-            // Чекаємо завантаження сторінки кошика
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("cart_title")));
-
+            Thread.sleep(5000);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // Закриваємо драйвер
             driver.quit();
+        }
+    }
+
+    public static boolean isElementPresent(WebDriver driver, By by) {
+        try {
+            driver.findElement(by);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }
