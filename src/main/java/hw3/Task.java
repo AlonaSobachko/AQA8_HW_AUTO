@@ -8,12 +8,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Task {
     public static void main(String[] args) {
         WebDriver driver = DriverInit.setUpDriver();
-
         try {
             // Крок 1: Відкрити пошук Google
             driver.get("https://www.google.com/search");
@@ -61,32 +60,9 @@ public class Task {
             WebElement submitButton = driver.findElement(By.cssSelector("input[type='submit']"));
             submitButton.click();
 
-            WebElement note = driver.findElement(By.xpath("/html/body/div[2]"));
-            System.out.println(note.getText());
-
-            // Крок 5: Перейти на вікно з реєстрацією на Guinness World Records
-            List<String> tabs = new ArrayList<>(driver.getWindowHandles());
-            driver.switchTo().window(tabs.get(1));  // Переключитися на другу вкладку (індекс 1)
-
-            // Заповнити всі поля на формі реєстрації
-            WebElement firstNameField = driver.findElement(By.id("FirstName"));
-            WebElement lastNameField = driver.findElement(By.id("LastName"));
-            WebElement dobField = driver.findElement(By.id("DateOfBirthDay"));
-            WebElement emailField = driver.findElement(By.id("EmailAddress"));
-            WebElement confirmEmailField = driver.findElement(By.id("ConfirmEmailAddress"));
-            WebElement passwordField = driver.findElement(By.id("Password"));
-            WebElement confirmPasswordField = driver.findElement(By.id("ConfirmPassword"));
-
-            firstNameField.sendKeys("Альона");
-            lastNameField.sendKeys("Собачко");
-            dobField.sendKeys("26/08/2001");  // Введи дату народження
-            emailField.sendKeys("lnk@mail.com");
-            confirmEmailField.sendKeys("lnk@mail.com");
-            passwordField.sendKeys("password123");
-            confirmPasswordField.sendKeys("password456");  // Введи різний пароль
-
-            // Додати чекання, щоб побачити повідомлення
-            Thread.sleep(3000);  // Зачекати 3 секунди
+            // Вивести текст з елемента Note
+            WebElement note = driver.findElement(By.xpath("//div[@id='note']")); // Замінити на правильний шлях до елемента Note
+            System.out.println("Note Text: " + note.getText());
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -96,3 +72,4 @@ public class Task {
         }
     }
 }
+
