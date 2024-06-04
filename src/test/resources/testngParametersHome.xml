@@ -1,0 +1,21 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="FoxtrotSearchSuite">
+    <test name="SearchTest1">
+        <parameter name="searchWord" value="машина"/>
+        <classes>
+            <class name="hw4.Task5"/>
+        </classes>
+    </test>
+    <test name="SearchTest2">
+        <parameter name="searchWord" value="input"/>
+        <classes>
+            <class name="hw4.Task5"/>
+        </classes>
+    </test>
+    <test name="SearchTest3">
+        <parameter name="searchWord" value="розуміння"/>
+        <classes>
+            <class name="hw4.Task5"/>
+        </classes>
+    </test>
+</suite>
