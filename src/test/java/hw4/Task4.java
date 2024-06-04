@@ -1,3 +1,5 @@
+package hw4;
+
 import driver_init.DriverInit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
